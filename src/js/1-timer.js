@@ -11,6 +11,7 @@ const seconds = document.querySelector('[data-seconds]');
 const input = document.querySelector('#datetime-picker');
 
 let userSelectedDate;
+let currentDate;
 
 const options = {
   enableTime: true,
@@ -19,6 +20,7 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     userSelectedDate = selectedDates[0];
+    currentDate = new Date();
     if (userSelectedDate < currentDate) {
       iziToast.error({ message: 'Please choose a date in the future' });
       startBtn.disabled = true;
@@ -63,8 +65,8 @@ startBtn.addEventListener('click', () => {
   const endDate = new Date(userSelectedDate).getTime();
 
   const countdownInterval = setInterval(() => {
-    const currentDate = new Date().getTime();
-    const remainingTime = endDate - currentDate;
+    currentDate = new Date();
+    const remainingTime = endDate - currentDate.getTime();
 
     if (remainingTime <= 0) {
       clearInterval(countdownInterval);
